@@ -1,28 +1,29 @@
 module.exports = {
-  port: '', //mention port
-  apiKey: '',// apikey
-  accessToken: '', //accessToken
-  env: '', // environment
+  baseUrlContentStack: 'https://cdn.contentstack.io/v3',
+  port: 4000,
+  apiKey: 'bltff856f3f034d89c7',
+  accessToken: 'cs037658fd3f355e61abdec712',
+  env: 'development',
   headerSection: {
-    headerContentTypeId: '', 
-    headerEnrtyId: '',
+    headerContentTypeId: 'express_header',
+    headerEnrtyId: 'blt8085f8a971ce28a6',
   },
   footerSection: {
-    footerContentTypeId: '',
-    footerEnrtyId: '',
+    footerContentTypeId: 'express_footer',
+    footerEnrtyId: 'bltf06662fffeb4e57a',
   },
   homeSection: {
-    homeContentTypeId: '',
-    homeEnrtyId: '',
+    homeContentTypeId: 'home_express',
+    homeEnrtyId: 'blta517cc7eaf012da7',
   },
   expressBlogSection: {
-    blogContentTypeId: '',
+    blogContentTypeId: 'trial_blog',
   },
   unTrackedUrls: {
-    unTrackedUrlsContentTypeId: '',
-    unTrackedUrlsEntryId: '',
+    unTrackedUrlsContentTypeId: 'untracked_urls',
+    unTrackedUrlsEntryId: 'bltf06179782511ce4b',
   },
   rootPath: {
-    path: '', // your website's url (eg: www.yoursitename.com)
+    path: 'http://localhost:4000',
   },
 };

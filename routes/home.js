@@ -10,7 +10,7 @@ const configVars = require('../config');
 const utils = require('../utils');
 
 router.get('/', (req, res) => {
-  utils.getData(`https://cdn.contentstack.io/v3/content_types/${configVars.homeSection.homeContentTypeId}/entries/${configVars.homeSection.homeEnrtyId}?environment=${configVars.env}`)
+  utils.getData(`${configVars.baseUrlContentStack}/content_types/${configVars.homeSection.homeContentTypeId}/entries/${configVars.homeSection.homeEnrtyId}?environment=${configVars.env}`)
     .then((data) => {
       res.render('pages/home.html', { home: data.data });
     })

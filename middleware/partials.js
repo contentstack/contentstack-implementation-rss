@@ -1,3 +1,4 @@
+/* eslint-disable consistent-return */
 /* eslint-disable prefer-destructuring */
 /**
  * Module dependencies.
@@ -11,7 +12,7 @@ module.exports = function (req, res, next) {
   async.parallel(
     [
       function (callback) {
-        utils.getData(`https://cdn.contentstack.io/v3/content_types/${configVars.headerSection.headerContentTypeId}/entries/${configVars.headerSection.headerEnrtyId}?environment=${configVars.env}`)
+        utils.getData(`${configVars.baseUrlContentStack}/content_types/${configVars.headerSection.headerContentTypeId}/entries/${configVars.headerSection.headerEnrtyId}?environment=${configVars.env}`)
           .then((data) => {
             callback(null, data.data);
           })
@@ -20,7 +21,7 @@ module.exports = function (req, res, next) {
           });
       },
       function (callback) {
-        utils.getData(`https://cdn.contentstack.io/v3/content_types/${configVars.footerSection.footerContentTypeId}/entries/${configVars.footerSection.footerEnrtyId}?environment=${configVars.env}`)
+        utils.getData(`${configVars.baseUrlContentStack}/content_types/${configVars.footerSection.footerContentTypeId}/entries/${configVars.footerSection.footerEnrtyId}?environment=${configVars.env}`)
           .then((data) => {
             callback(null, data.data);
           })

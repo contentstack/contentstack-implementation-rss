@@ -1,3 +1,5 @@
+/* eslint-disable consistent-return */
+/* eslint-disable no-use-before-define */
 /* eslint-disable max-len */
 /* eslint-disable no-shadow */
 /* eslint-disable no-inner-declarations */
@@ -7,36 +9,12 @@ const configVars = require("./config");
 const utils = require("./utils");
 
 const mapping = [];
-
 let syncTokenVar = "";
-
-// For untracked urls 
-async function untrackedUrls() {
-  return utils
-    .getData(
-      `https://cdn.contentstack.io/v3/content_types/${configVars.unTrackedUrls.unTrackedUrlsContentTypeId}/entries/${configVars.unTrackedUrls.unTrackedUrlsEntryId}?environment=${configVars.env}`
-    )
-    .then(resp => {
-      resp.data.entry.urls.map(index => {
-        mapping.push({
-          uid: "un-tracked",
-          urls: index.href,
-          lastmod: resp.data.entry.updated_at,
-          changfreq: "weekly",
-          priority: "0.8"
-        });
-      });
-      utils.createSitemap(mapping);
-    })
-    .catch(err => {
-      console.log(err);
-    });
-}
 
 async function initialSynCall() {
   return utils
     .getData(
-      `https://cdn.contentstack.io/v3/stacks/sync?init=true&environment=${configVars.env}&content_type_uid=${configVars.expressBlogSection.blogContentTypeId}`
+      `${configVars.baseUrlContentStack}/stacks/sync?init=true&environment=${configVars.env}&content_type_uid=${configVars.expressBlogSection.blogContentTypeId}`
     )
     .then(data => {
       if (data.data.sync_token) {
@@ -44,22 +22,26 @@ async function initialSynCall() {
         data.data.items.map(index => {
           mapping.push({
             uid: index.data.uid,
-            urls: index.data.url,
-            lastmod: index.data.updated_at,
-            changfreq: "daily",
-            priority: "0.4"
+            link: index.data.url,
+            last: index.data.updated_at,
+            title: index.data.heading,
+            description: index.data.description,
+            publishDate: index.data.publish_details.time,
+            language: index.data.locale
           });
         });
-        utils.createSitemap(mapping);
+        utils.createRssFile(mapping);
         utils.syncWriteFunction(syncTokenVar);
       } else if (data.data.pagination_token) {
         data.data.items.map(index => {
           mapping.push({
             uid: index.data.uid,
-            urls: index.data.url,
-            lastmod: index.data.updated_at,
-            changfreq: "daily",
-            priority: "0.4"
+            link: index.data.url,
+            last: index.data.updated_at,
+            title: index.data.heading,
+            description: index.data.description,
+            publishDate: index.data.publish_details.time,
+            language: index.data.locale
           });
         });
         pageCallMethod(data.data.pagination_token);
@@ -73,23 +55,25 @@ async function initialSynCall() {
 function pageCallMethod(token) {
   return utils
     .getData(
-      `https://cdn.contentstack.io/v3/stacks/sync?pagination_token=${token}`
+      `${configVars.baseUrlContentStack}/stacks/sync?pagination_token=${token}`
     )
     .then(data => {
       data.data.items.map(index => {
         mapping.push({
           uid: index.data.uid,
-          urls: index.data.url,
-          lastmod: index.data.updated_at,
-          changfreq: "daily",
-          priority: "0.4"
+          link: index.data.url,
+          last: index.data.updated_at,
+          title: index.data.heading,
+          description: index.data.description,
+          publishDate: index.data.publish_details.time,
+          language: index.data.locale
         });
       });
       if (data.data.pagination_token) {
         pageCallMethod(data.data.pagination_token);
       }
       syncTokenVar = data.data.sync_token;
-      utils.createSitemap(mapping);
+      utils.createRssFile(mapping);
       utils.syncWriteFunction(syncTokenVar);
     })
     .catch(err => {
@@ -100,12 +84,13 @@ function pageCallMethod(token) {
 async function updateCall() {
   return utils
     .getData(
-      `https://cdn.contentstack.io/v3/stacks/sync?sync_token=${syncTokenVar}`
+      `${configVars.baseUrlContentStack}/stacks/sync?sync_token=${syncTokenVar}`
     )
     .then(data => {
       if (syncTokenVar === data.data.sync_token) {
-          return null
-      } else if (syncTokenVar !== data.data.sync_token) {
+        return null;
+      }
+      if (syncTokenVar !== data.data.sync_token) {
         syncTokenVar = data.data.sync_token;
         utils.syncWriteFunction(syncTokenVar);
         const syncUpdatedData = data.data;
@@ -117,10 +102,12 @@ async function updateCall() {
             if (filteredData.length === 0) {
               mapping.push({
                 uid: index.data.uid,
-                urls: index.data.url,
-                lastmod: index.data.updated_at,
-                changfreq: "daily",
-                priority: "0.4"
+                link: index.data.url,
+                last: index.data.updated_at,
+                title: index.data.heading,
+                description: index.data.description,
+                publishDate: index.data.publish_details.time,
+                language: index.data.locale
               });
             }
           } else if (index.type === "entry_deleted") {
@@ -140,13 +127,12 @@ async function updateCall() {
             }
           });
         });
-        utils.createSitemap(mapping);
+        utils.createRssFile(mapping);
       }
     });
 }
 
 module.exports = {
-  untrackedUrls,
   initialSynCall,
   updateCall
 };

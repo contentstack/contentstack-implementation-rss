@@ -7,7 +7,7 @@ const nunjucks = require('nunjucks');
 const path = require('path');
 
 
-const sitemapFunction = require('./sitemap');
+const sitemapFunction = require('./rss');
 const configVars = require('./config');
 
 
@@ -22,18 +22,13 @@ nunjucks.configure(['views/'], {
 
 require('./routes')(app);
 
-
-sitemapFunction.untrackedUrls(); // first untracked url call with no interval
-
-setInterval(sitemapFunction.untrackedUrls, 2592000); // for untracked interval is set for 30 days in seconds
-
-sitemapFunction.initialSynCall(); // called only once
+sitemapFunction.initialSynCall();
 
 setInterval(sitemapFunction.updateCall, 100000); // 1 min interval change per your need
 
-app.get('/sitemap', (req, res) => {
+app.get('/rssfeed', (req, res) => {
   res.contentType('application/xml');
-  res.sendFile(path.join(__dirname, 'sitemap.xml'));
+  res.sendFile(path.join(__dirname, 'rss.xml'));
 });
 
 // load port on 4000

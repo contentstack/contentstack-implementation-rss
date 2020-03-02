@@ -7,21 +7,25 @@ const axios = require('axios');
 const fs = require('fs');
 const configVars = require('./config');
 
-function createSitemap(mapping) {
-  const stream = fs.createWriteStream('sitemap.xml');
-  stream.write('<?xml version="1.0" encoding="utf-8" standalone="yes" ?>');
-  stream.write(
-    '\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">',
-  );
+function createRssFile(mapping) {
+  const stream = fs.createWriteStream('rss.xml');
+  stream.write('<?xml version="1.0" encoding="UTF-8" ?>');
+  stream.write('\n<rss version="2.0">');
+  stream.write('\n<channel>');
+  stream.write('<title>Contentstck Blog Page Rss</title>');
+  stream.write('<link>https://localhost:4000/</link>');
+  stream.write('<description>Guide to build rss</description>');
   mapping.map((index) => {
-    stream.write('\n  <url>\n');
-    stream.write(`    <loc>${configVars.rootPath.path + index.urls}</loc>\n`);
-    stream.write(`    <lastmod>${index.lastmod}</lastmod>\n`);
-    stream.write(`    <changefreq>${index.changfreq}</changefreq>\n`);
-    stream.write(`    <priority>${index.priority}</priority>\n`);
-    stream.write('  </url>');
+    stream.write('\n  <item>\n');
+    stream.write(`    <title>${index.title}</title>\n`);
+    stream.write(`    <description>${index.description}</description>\n`);
+    stream.write(`    <link>${`${configVars.rootPath.path}/blog${index.link}`}</link>\n`);
+    stream.write(`    <pubDate>${index.publishDate}</pubDate>\n`);
+    stream.write(`    <language>${index.language}</language>\n`);
+    stream.write('  </item>');
   });
-  stream.write('\n</urlset>');
+  stream.write('\n</channel>');
+  stream.write('\n</rss>');
   stream.end();
 }
 
@@ -55,5 +59,5 @@ function getData(url) {
 module.exports = {
   getData,
   syncWriteFunction,
-  createSitemap,
+  createRssFile,
 };

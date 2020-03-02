@@ -10,7 +10,7 @@ const utils = require('../utils');
 
 
 router.get('/', (req, res) => {
-  utils.getData(`https://cdn.contentstack.io/v3/content_types/${configVars.expressBlogSection.blogContentTypeId}/entries?environment=${configVars.env}`)
+  utils.getData(`${configVars.baseUrlContentStack}/content_types/${configVars.expressBlogSection.blogContentTypeId}/entries?environment=${configVars.env}`)
     .then((data) => {
       res.render('pages/blog.html', { blog: data.data });
     }).catch((err) => {
@@ -19,7 +19,7 @@ router.get('/', (req, res) => {
 });
 
 router.get('/:url', (req, res) => {
-  utils.getData(`https://cdn.contentstack.io/v3/content_types/${configVars.expressBlogSection.blogContentTypeId}/entries?environment=${configVars.env}`)
+  utils.getData(`${configVars.baseUrlContentStack}/content_types/${configVars.expressBlogSection.blogContentTypeId}/entries?environment=${configVars.env}`)
     .then((data) => {
       const dataContent = data.data.entries.find((blog) => blog.url === `/${req.params.url}`);
       res.render('pages/blogpage.html', { content: dataContent });
