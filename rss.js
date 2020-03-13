@@ -1,9 +1,7 @@
-/* eslint-disable consistent-return */
-/* eslint-disable no-use-before-define */
-/* eslint-disable max-len */
-/* eslint-disable no-shadow */
-/* eslint-disable no-inner-declarations */
-/* eslint-disable array-callback-return */
+/**
+ * Module dependencies.
+ */
+
 
 const configVars = require("./config");
 const utils = require("./utils");

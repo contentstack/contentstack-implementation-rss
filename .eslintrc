@@ -3,6 +3,15 @@
   "rules": {
     "func-names": ["error", "never"],
     "no-unused-vars":"warn",
-    "no-console":"off"
+    "no-console":"off",
+    "prefer-destructuring":"off",
+    "consistent-return":"off",
+    "global-require":"off",
+    "no-use-before-define":"off",
+    "max-len":"off",
+    "no-shadow":"off",
+    "no-inner-declarations":"off",
+    "array-callback-return":"off"
+
   }
 }

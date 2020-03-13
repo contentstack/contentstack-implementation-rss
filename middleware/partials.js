@@ -1,5 +1,3 @@
-/* eslint-disable consistent-return */
-/* eslint-disable prefer-destructuring */
 /**
  * Module dependencies.
  */
