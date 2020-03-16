@@ -119,8 +119,10 @@ async function consecutiveSyncCall() {
         mapping.map((obj, index) => {
           syncUpdatedData.items.map((respIndex) => {
             if (obj.uid === respIndex.data.uid) {
-              if (obj.lastmod !== respIndex.data.updated_at) {
-                mapping[index].urls = respIndex.data.url;
+              if (obj.last !== respIndex.data.updated_at) {
+                mapping[index].link = respIndex.data.url;
+                mapping[index].title = respIndex.data.title;
+                mapping[index].description = respIndex.data.description;
               }
             }
           });
