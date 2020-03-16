@@ -1,5 +1,6 @@
 module.exports = {
   baseUrlContentStack: 'https://cdn.contentstack.io/v3',
+  updateInterval: 60000,
   port: '',
   apiKey: '',
   accessToken: '',

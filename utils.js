@@ -12,9 +12,9 @@ function createRssFile(mapping) {
   stream.write('<?xml version="1.0" encoding="UTF-8" ?>');
   stream.write('\n<rss version="2.0">');
   stream.write('\n<channel>');
-  stream.write('<title>Contentstck Blog Page Rss</title>');
-  stream.write('<link>https://localhost:4000/</link>');
-  stream.write('<description>Guide to build rss</description>');
+  stream.write('\n<title>Contentstck Blog Page Rss</title>');
+  stream.write('\n<link>https://localhost:4000/</link>');
+  stream.write('\n<description>Guide to build rss</description>');
   mapping.map((index) => {
     stream.write('\n  <item>\n');
     stream.write(`    <title>${index.title}</title>\n`);
@@ -32,7 +32,7 @@ function createRssFile(mapping) {
 
 // Write SyncFile with SyncToken
 
-function syncWriteFunction(syncTokenVar) {
+function syncTokenGenerator(syncTokenVar) {
   fs.writeFileSync('./syncToken.txt', syncTokenVar, (err) => {
     if (err) {
       console.log(err);
@@ -58,6 +58,6 @@ function getData(url) {
 
 module.exports = {
   getData,
-  syncWriteFunction,
+  syncTokenGenerator,
   createRssFile,
 };

@@ -7,7 +7,7 @@ const nunjucks = require('nunjucks');
 const path = require('path');
 
 
-const sitemapFunction = require('./rss');
+const rssGenerator = require('./rss');
 const configVars = require('./config');
 
 
@@ -22,9 +22,9 @@ nunjucks.configure(['views/'], {
 
 require('./routes')(app);
 
-sitemapFunction.initialSynCall();
+rssGenerator.initialSyncCall();
 
-setInterval(sitemapFunction.updateCall, 100000); // 1 min interval change per your need
+setInterval(rssGenerator.consecutiveSyncCall, configVars.updateInterval); // 1 min interval change per your need
 
 app.get('/rssfeed', (req, res) => {
   res.contentType('application/xml');
