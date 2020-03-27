@@ -1,3 +1,6 @@
+[![Contentstack](https://www.contentstack.com/docs/static/images/contentstack.png)](https://www.contentstack.com/)
+
+
 # Implement RSS for contentstack powered website
 
 ## About Contentstack
@@ -18,11 +21,6 @@ We have created an in-depth tutorial on how you can create a RSS feature for a c
 ![Screenshot from 2020-03-02 14-47-48](https://user-images.githubusercontent.com/29656920/77642328-7e626d00-6f83-11ea-8185-f1fe5765fd16.png)
 
 ![Screenshot from 2020-03-26 16-40-54](https://user-images.githubusercontent.com/29656920/77642349-85897b00-6f83-11ea-9a5e-f94cf6101913.png)
-
-![Screenshot from 2020-03-18 15-34-41](https://user-images.githubusercontent.com/29656920/77642393-96d28780-6f83-11ea-8add-99adb0e52df6.png)
-
-![Screenshot from 2020-03-18 15-35-58](https://user-images.githubusercontent.com/29656920/77642399-99cd7800-6f83-11ea-837c-9b504b3bf6e5.png)
-
 
 ## Documentation
 
